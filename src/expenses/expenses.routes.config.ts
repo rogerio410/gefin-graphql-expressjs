@@ -1,18 +1,18 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { CommomRoutesConfig } from "../common/common.routes.config";
 
-export class UsersRoutes extends CommomRoutesConfig{
+export class ExpensesRoutes extends CommomRoutesConfig{
 
     constructor(app: express.Application){
-        super(app, 'UsersRoutes')
+        super(app, 'ExpensesRoutes')
     }
     
     configureRoutes(): express.Application {
-        this.app.route('/users')
+        this.app.route('/expenses')
             .get((req: Request, res: Response)=>{})
             .post((req: Request, res: Response)=>{})
 
-        this.app.route(`/users/:userId`)
+        this.app.route(`/expenses/:id`)
             .all((req: Request, res: Response, next: NextFunction)=>{})
             .get((req: Request, res: Response)=>{})
             .put((req: Request, res: Response)=>{})

@@ -4,7 +4,7 @@ import cors from 'cors'
 import debug from 'debug'
 import { CommomRoutesConfig } from './common/common.routes.config'
 import { my_logger } from './common/log'
-import { UsersRoutes } from './users/users.routes.config'
+import { ExpensesRoutes } from './expenses/expenses.routes.config'
 
 // Express App and others stuffs
 const app: express.Application = express()
@@ -20,7 +20,7 @@ app.use(cors())
 app.use(my_logger)
 
 // Load app routes
-routes.push(new UsersRoutes(app))
+routes.push(new ExpensesRoutes(app))
 
 // Hello Route
 const hello_msg = `Server started and running at http://localhost:${port}`
