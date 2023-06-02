@@ -1,0 +1,13 @@
+
+# GEFIN - Gestor Financeiro Pessoal
+- Registro de Gastos Diários
+
+# Ref.: 
+https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-1
+https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-2
+https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-3
+
+# Setup project
+yarn init -y
+yarn add express debug winston express-winston cors
+yarn add @types/cors @types/express @types/debug source-map-support tslint typescript -D
