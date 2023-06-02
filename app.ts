@@ -6,8 +6,8 @@ import * as http from 'http'
 import * as winston from 'winston'
 
 import debug from 'debug'
-import { CommomRoutesConfig } from './common/common.routes.config'
-import { UsersRoutes } from './users/users.routes.config'
+import { CommomRoutesConfig } from './src/common/common.routes.config'
+import { UsersRoutes } from './src/users/users.routes.config'
 
 // Express App
 const app: express.Application = express()
