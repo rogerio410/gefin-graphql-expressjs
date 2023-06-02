@@ -1,17 +1,17 @@
-import express from 'express'
+import { Application } from 'express'
 
 export abstract class CommomRoutesConfig{
-    app: express.Application
-    name: string
+    app: Application
+    private _name: string
 
-    constructor(app: express.Application, name: string){
+    constructor(app: Application, name: string){
         this.app = app
-        this.name = name
+        this._name = name
     }
 
-    getName(){
-        return this.name
+    get name(){
+        return this._name
     }
 
-    abstract configureRoutes(): express.Application;
+    abstract configureRoutes(): Application;
 }

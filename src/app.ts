@@ -31,7 +31,7 @@ app.get('/', (req: Request, res: Response)=>{
 // Startup app
 app.listen(port, ()=>{
     routes.forEach((route: CommomRoutesConfig) => {
-        debugLog(`Routes add for ${route.getName()}`)
+        debugLog(`Routes add for ${route.name}`)
     })
 
     console.log(hello_msg)   

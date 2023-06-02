@@ -1,13 +1,13 @@
-import express, { NextFunction, Request, Response } from 'express';
+import { Application, NextFunction, Request, Response } from 'express';
 import { CommomRoutesConfig } from "../common/common.routes.config";
 
 export class ExpensesRoutes extends CommomRoutesConfig{
 
-    constructor(app: express.Application){
+    constructor(app: Application){
         super(app, 'ExpensesRoutes')
     }
     
-    configureRoutes(): express.Application {
+    configureRoutes(): Application {
         this.app.route('/expenses')
             .get((req: Request, res: Response)=>{})
             .post((req: Request, res: Response)=>{})
