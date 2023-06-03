@@ -14,3 +14,14 @@ yarn add @types/cors @types/express @types/debug source-map-support tslint types
 yarn add ts-node-dev -D
 
 yarn add @apollo/server graphql
+
+- to load .graphql files
+- https://the-guild.dev/graphql/tools/docs/schema-loading
+yarn add @graphql-tools/load-files
+
+https://github.com/perry-mitchell/ulidx
+
+
+
+# VS Code
+https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql

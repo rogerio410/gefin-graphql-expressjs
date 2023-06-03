@@ -7,48 +7,63 @@ import cors from 'cors'
 import debug from 'debug'
 import { CommomRoutesConfig } from './common/common.routes.config'
 import { my_logger } from './common/log'
-import { expensesResolvers } from './expenses/expense.resolvers'
 import { ExpensesRoutes } from './expenses/expenses.routes'
-import { expensesTypeDefs } from './expenses/expenses.schema'
 
-// Express App and others stuffs
-const app: express.Application = express()
-const port = 3000
-const routes: Array<CommomRoutesConfig> = []
+// GraphQL Schema load: 
+//1. from export (as code)
+// import { expensesTypeDefs } from './expenses/expenses.schema'
+
+// 2. from file
+import { loadFiles } from '@graphql-tools/load-files'
+// import { expensesResolver } from './expenses/expense.resolvers'
+
 const debugLog: debug.IDebugger = debug('app')
 
-// middlewares
-app.use(express.json())
-app.use(cors())
+async function main(){
+    // Express App and others stuffs
+    const app: express.Application = express()
+    const port = 3000
+    const routes: Array<CommomRoutesConfig> = []
+    
+    // middlewares
+    app.use(express.json())
+    app.use(cors())
 
-// active middleware for winton logger
-app.use(my_logger)
+    // Active middleware for winston logger
+    app.use(my_logger)
 
-// Load app routes
-routes.push(new ExpensesRoutes(app))
+    // Registering routes
+    routes.push(new ExpensesRoutes(app))
 
-// Hello Route
-const hello_msg = `Server started and running at http://localhost:${port}`
-app.get('/', (req: Request, res: Response)=>{
-    res.status(200).json(hello_msg)
-})
-
-
-// GraphQL Apollo Server Mdlw
-const serverGql = new ApolloServer({
-    typeDefs: expensesTypeDefs,
-    resolvers: expensesResolvers,
-})
-
-serverGql.start().then(()=>{
-    app.use('/graphql', expressMiddleware(serverGql))
-})
-
-// Startup app
-app.listen(port, ()=>{
-    routes.forEach((route: CommomRoutesConfig) => {
-        debugLog(`Routes add for ${route.name}`)
+    // Hello Route
+    const hello_msg = `Server started and running at http://localhost:${port}`
+    app.get('/', (req: Request, res: Response)=>{
+        res.status(200).json(hello_msg)
     })
 
-    console.log(hello_msg)   
+    // GraphQL Apollo Server as Middleware
+    const serverGql = new ApolloServer({
+        // typeDefs: expensesTypeDefs,
+        typeDefs: await loadFiles('src/**/*.graphql'),
+        // resolvers: expensesResolver,
+        resolvers: await loadFiles('src/**/*.resolvers.ts'),
+    })
+    await serverGql.start()
+
+    app.use('/graphql', expressMiddleware(serverGql))
+
+    // Startup App
+    app.listen(port, ()=>{
+        routes.forEach((route: CommomRoutesConfig) => {
+            debugLog(`Routes add for ${route.name}`)
+        })
+
+        console.log(hello_msg)   
+    })
+
+}
+
+main().catch(error => {
+    debugLog(error)
+    process.exit(1)
 })
