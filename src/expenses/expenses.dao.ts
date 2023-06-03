@@ -7,6 +7,12 @@ class ExpensesDAO{
             description: 'Café Riverside',
             amount: 15.0,
             category: 'Alimentação'
+        },
+        {
+            date: new Date(),
+            description: 'Jantar Maná',
+            amount: 115.0,
+            category: 'Alimentação'
         }
     ]
 
