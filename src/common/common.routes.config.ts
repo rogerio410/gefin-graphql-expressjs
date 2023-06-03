@@ -7,6 +7,7 @@ export abstract class CommomRoutesConfig{
     constructor(app: Application, name: string){
         this.app = app
         this._name = name
+        this.configureRoutes()
     }
 
     get name(){

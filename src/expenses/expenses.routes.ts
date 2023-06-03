@@ -1,5 +1,6 @@
 import { Application, NextFunction, Request, Response } from 'express';
 import { CommomRoutesConfig } from "../common/common.routes.config";
+import expensesController from './expenses.controller';
 
 export class ExpensesRoutes extends CommomRoutesConfig{
 
@@ -9,7 +10,7 @@ export class ExpensesRoutes extends CommomRoutesConfig{
     
     configureRoutes(): Application {
         this.app.route('/expenses')
-            .get((req: Request, res: Response)=>{})
+            .get(expensesController.list)
             .post((req: Request, res: Response)=>{})
 
         this.app.route(`/expenses/:id`)

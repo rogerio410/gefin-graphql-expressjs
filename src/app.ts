@@ -4,7 +4,7 @@ import cors from 'cors'
 import debug from 'debug'
 import { CommomRoutesConfig } from './common/common.routes.config'
 import { my_logger } from './common/log'
-import { ExpensesRoutes } from './expenses/expenses.routes.config'
+import { ExpensesRoutes } from './expenses/expenses.routes'
 
 // Express App and others stuffs
 const app: express.Application = express()
