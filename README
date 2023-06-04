@@ -21,6 +21,8 @@ yarn add @graphql-tools/load-files
 
 https://github.com/perry-mitchell/ulidx
 
+yarn add graphql-parse-resolve-info
+
 
 
 # VS Code

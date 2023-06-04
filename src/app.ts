@@ -1,69 +1,66 @@
-import express, { Request, Response } from 'express'
+import express, { Request, Response } from "express";
 
-import { ApolloServer } from '@apollo/server'
-import { expressMiddleware } from '@apollo/server/express4'
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
 
-import cors from 'cors'
-import debug from 'debug'
-import { CommomRoutesConfig } from './common/common.routes.config'
-import { my_logger } from './common/log'
-import { ExpensesRoutes } from './expenses/expenses.routes'
+import cors from "cors";
+import debug from "debug";
+import { CommomRoutesConfig } from "./common/common.routes.config";
+import { my_logger } from "./common/log";
+import { ExpensesRoutes } from "./presentation/rest/expenses.routes";
 
-// GraphQL Schema load: 
-//1. from export (as code)
+// GraphQL Schema load:
+//1. from import/export (as code)
 // import { expensesTypeDefs } from './expenses/expenses.schema'
-
-// 2. from file
-import { loadFiles } from '@graphql-tools/load-files'
 // import { expensesResolver } from './expenses/expense.resolvers'
 
-const debugLog: debug.IDebugger = debug('app')
+// 2. from file
+import { loadFiles } from "@graphql-tools/load-files";
 
-async function main(){
-    // Express App and others stuffs
-    const app: express.Application = express()
-    const port = 3000
-    const routes: Array<CommomRoutesConfig> = []
-    
-    // middlewares
-    app.use(express.json())
-    app.use(cors())
+const debugLog: debug.IDebugger = debug("app");
 
-    // Active middleware for winston logger
-    app.use(my_logger)
+async function main() {
+  // Express App and others stuffs
+  const app: express.Application = express();
+  const port = 3000;
+  const routes: Array<CommomRoutesConfig> = [];
 
-    // Registering routes
-    routes.push(new ExpensesRoutes(app))
+  // middlewares
+  app.use(express.json());
+  app.use(cors());
 
-    // Hello Route
-    const hello_msg = `Server started and running at http://localhost:${port}`
-    app.get('/', (req: Request, res: Response)=>{
-        res.status(200).json(hello_msg)
-    })
+  // Active middleware for winston logger
+  app.use(my_logger);
 
-    // GraphQL Apollo Server as Middleware
-    const serverGql = new ApolloServer({
-        // typeDefs: expensesTypeDefs,
-        typeDefs: await loadFiles('src/**/*.graphql'),
-        // resolvers: expensesResolver,
-        resolvers: await loadFiles('src/**/*.resolvers.ts'),
-    })
-    await serverGql.start()
+  // Registering routes
+  routes.push(new ExpensesRoutes(app));
 
-    app.use('/graphql', expressMiddleware(serverGql))
+  // Hello Route
+  const hello_msg = `Server started and running at http://localhost:${port}`;
+  app.get("/", (req: Request, res: Response) => {
+    res.status(200).json(hello_msg);
+  });
 
-    // Startup App
-    app.listen(port, ()=>{
-        routes.forEach((route: CommomRoutesConfig) => {
-            debugLog(`Routes add for ${route.name}`)
-        })
+  // GraphQL Apollo Server as Middleware
+  const serverGql = new ApolloServer({
+    typeDefs: await loadFiles("src/**/*.graphql"),
+    resolvers: await loadFiles("src/**/*.resolvers.ts"),
+  });
+  await serverGql.start();
 
-        console.log(hello_msg)   
-    })
+  app.use("/graphql", expressMiddleware(serverGql));
 
+  // Startup App
+  app.listen(port, () => {
+    routes.forEach((route: CommomRoutesConfig) => {
+      debugLog(`Routes add for ${route.name}`);
+    });
+
+    console.log(hello_msg);
+  });
 }
 
-main().catch(error => {
-    debugLog(error)
-    process.exit(1)
-})
+main().catch((error) => {
+  debugLog(error);
+  process.exit(1);
+});
