@@ -19,14 +19,45 @@ class ExpensesDAO {
     },
   ];
 
+  private getExpenseIndexById(id: string) {
+    return this.expenses.findIndex((e) => e.id === id);
+  }
+
   async getExpenses(skip?: number, take?: number) {
     return this.expenses.slice(skip, take);
+  }
+
+  async getExpenseById(id: string) {
+    const index = this.getExpenseIndexById(id);
+    if (index === -1) return;
+
+    return this.expenses.at(index);
   }
 
   async addExpense(expense: CreateExpenseDTO) {
     const newExpense = { ...expense, id: ulid() };
     this.expenses.push(newExpense);
     return newExpense;
+  }
+
+  async updateExpenseById(id: string, expenseData: Omit<Expense, "id">) {
+    const index = this.getExpenseIndexById(id);
+    if (!index) {
+      throw Error("Expense Not Found!");
+    }
+
+    this.expenses[index] = { id, ...expenseData };
+
+    return this.expenses.at(index);
+  }
+
+  deleteExpenseById(id: string) {
+    const index = this.expenses.findIndex((e) => e.id === id);
+    if (!index) {
+      throw Error("Expense Not Found!");
+    }
+
+    this.expenses.splice(index, 1);
   }
 }
 

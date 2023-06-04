@@ -1,4 +1,4 @@
-import { Application, NextFunction, Request, Response } from "express";
+import { Application, NextFunction } from "express";
 import { CommomRoutesConfig } from "../../common/common.routes.config";
 import expensesController from "./expenses.controller";
 
@@ -11,15 +11,14 @@ export class ExpensesRoutes extends CommomRoutesConfig {
     this.app
       .route("/expenses")
       .get(expensesController.list)
-      .post((req: Request, res: Response) => {});
+      .post(expensesController.create);
 
     this.app
       .route(`/expenses/:id`)
-      .all((req: Request, res: Response, next: NextFunction) => {})
-      .get((req: Request, res: Response) => {})
-      .put((req: Request, res: Response) => {})
-      .patch((req: Request, res: Response) => {})
-      .delete((req: Request, res: Response) => {});
+      .all((_, __, next: NextFunction) => next())
+      .get(expensesController.getOne)
+      .put(expensesController.update)
+      .delete(expensesController.delete);
 
     return this.app;
   }

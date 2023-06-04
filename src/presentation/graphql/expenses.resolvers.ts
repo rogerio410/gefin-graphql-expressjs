@@ -1,4 +1,3 @@
-import { GraphQLResolveInfo } from "graphql";
 import { parseResolveInfo } from "graphql-parse-resolve-info";
 import expensesService from "../../application/expenses.service";
 import { Expense } from "../../domain/expense.entity";
@@ -13,7 +12,6 @@ type CreateExpenseInput = {
 const expensesResolver = {
   Query: {
     expenses: (root, { skip, take }, ctx, info) => {
-      // Get Meta-data from query: args, fields requested
       const parsedInfo = parseResolveInfo(info);
       console.log(parsedInfo);
 
@@ -21,14 +19,15 @@ const expensesResolver = {
     },
   },
   Mutation: {
-    createExpense: (root, { input }, context, info: GraphQLResolveInfo) => {
+    createExpense: (root, args, ctx, info) => {
+      const input = args.input as CreateExpenseInput;
       return expensesService.create(input);
     },
   },
 
   // Fields Resolver
   Expense: {
-    amount: (expense: Expense, arg, context, info) => {
+    amount: (expense: Expense, arg, ctx, info) => {
       return expense.amount;
     },
   },

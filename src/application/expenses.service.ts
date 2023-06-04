@@ -8,6 +8,8 @@ interface CreateExpenseRequest {
   category: string;
 }
 
+type UpdateExpenseRequest = CreateExpenseRequest;
+
 class ExpensesService implements CRUDService<Expense> {
   async list(skip?: number, take?: number): Promise<Expense[]> {
     return ExpensesDao.getExpenses(skip, take);
@@ -15,6 +17,18 @@ class ExpensesService implements CRUDService<Expense> {
 
   async create(request: CreateExpenseRequest) {
     return await ExpensesDao.addExpense(request);
+  }
+
+  async getOneById(id: string) {
+    return await ExpensesDao.getExpenseById(id);
+  }
+
+  async updateById(id: string, request: UpdateExpenseRequest) {
+    return await ExpensesDao.updateExpenseById(id, request);
+  }
+
+  async deleteById(id: string) {
+    await ExpensesDao.deleteExpenseById(id);
   }
 }
 
