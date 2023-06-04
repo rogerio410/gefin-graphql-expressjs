@@ -2,7 +2,6 @@ import express, { Request, Response } from "express";
 
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-
 import cors from "cors";
 import debug from "debug";
 import { CommomRoutesConfig } from "./common/common.routes.config";
@@ -13,8 +12,7 @@ import { ExpensesRoutes } from "./presentation/rest/expenses.routes";
 //1. from import/export (as code)
 // import { expensesTypeDefs } from './expenses/expenses.schema'
 // import { expensesResolver } from './expenses/expense.resolvers'
-
-// 2. from file
+// 2. Load from file
 import { loadFiles } from "@graphql-tools/load-files";
 
 const debugLog: debug.IDebugger = debug("app");
@@ -25,30 +23,36 @@ async function main() {
   const port = 3000;
   const routes: Array<CommomRoutesConfig> = [];
 
-  // middlewares
+  // Middlewares
   app.use(express.json());
   app.use(cors());
 
-  // Active middleware for winston logger
+  // Middleware for winston logger
   app.use(my_logger);
 
   // Registering routes
   routes.push(new ExpensesRoutes(app));
 
-  // Hello Route
+  // REST Hello Route
   const hello_msg = `Server started and running at http://localhost:${port}`;
   app.get("/", (req: Request, res: Response) => {
     res.status(200).json(hello_msg);
   });
 
   // GraphQL Apollo Server as Middleware
-  const serverGql = new ApolloServer({
+  interface MyContext {
+    currentUser: string;
+  }
+  const serverGql = new ApolloServer<MyContext>({
     typeDefs: await loadFiles("src/**/*.graphql"),
     resolvers: await loadFiles("src/**/*.resolvers.ts"),
   });
-  await serverGql.start();
 
-  app.use("/graphql", expressMiddleware(serverGql));
+  await serverGql.start();
+  const graphMiddleware = expressMiddleware<MyContext>(serverGql, {
+    context: async ({ req, res }) => ({ currentUser: "rogerio410" }),
+  });
+  app.use("/graphql", graphMiddleware);
 
   // Startup App
   app.listen(port, () => {

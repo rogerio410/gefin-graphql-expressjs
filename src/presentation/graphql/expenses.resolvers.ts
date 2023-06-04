@@ -11,6 +11,7 @@ type CreateExpenseInput = {
 
 const expensesResolver = {
   Query: {
+    ping: (_, __, ctx) => ctx.currentUser,
     expenses: (root, { skip, take }, ctx, info) => {
       const parsedInfo = parseResolveInfo(info);
       console.log(parsedInfo);
