@@ -1,5 +1,5 @@
 import { ulid } from "ulidx";
-import { NotFoundException } from "../common/exceptions/NotFoundException";
+import { NotFoundException } from "../application/exceptions/NotFoundException";
 import { Expense } from "../domain/expense.entity";
 
 class ExpensesDAO {

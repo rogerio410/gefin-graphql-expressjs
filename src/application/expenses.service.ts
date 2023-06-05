@@ -1,7 +1,7 @@
 import { CRUDService } from "../common/crud.service";
-import { NotFoundException } from "../common/exceptions/NotFoundException";
 import { Expense } from "../domain/expense.entity";
 import ExpensesDao from "../persistence/expenses.dao";
+import { NotFoundException } from "./exceptions/NotFoundException";
 
 interface CreateExpenseRequest {
   description: string;
