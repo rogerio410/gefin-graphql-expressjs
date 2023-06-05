@@ -8,7 +8,7 @@ import { CommomRoutesConfig } from "./common/common.routes.config";
 import { my_logger } from "./common/log";
 import { ExpensesRoutes } from "./presentation/rest/expenses.routes";
 
-// GraphQL Schema load:
+// #### Load GraphQL Schema ####:
 //1. from import/export (as code)
 // import { expensesTypeDefs } from './expenses/expenses.schema'
 // import { expensesResolver } from './expenses/expense.resolvers'
