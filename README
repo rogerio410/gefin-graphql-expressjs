@@ -13,6 +13,7 @@ yarn add express debug winston express-winston cors
 yarn add @types/cors @types/express @types/debug source-map-support tslint typescript -D
 yarn add ts-node-dev -D
 https://github.com/perry-mitchell/ulidx
+yarn add express-async-errors
 
 # Setup GraphQL
 yarn add @apollo/server graphql

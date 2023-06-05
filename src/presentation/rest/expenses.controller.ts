@@ -29,10 +29,6 @@ class ExpenseController {
     const { id } = req.params;
     const expense = await expenseService.getOneById(id);
 
-    if (!expense) {
-      return res.status(404).json({ error: "Expense Not Found!" });
-    }
-
     return res.json(expense);
   }
 

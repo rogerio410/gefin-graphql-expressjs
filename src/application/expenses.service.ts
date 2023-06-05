@@ -1,4 +1,5 @@
 import { CRUDService } from "../common/crud.service";
+import { NotFoundException } from "../common/exceptions/NotFoundException";
 import { Expense } from "../domain/expense.entity";
 import ExpensesDao from "../persistence/expenses.dao";
 
@@ -20,7 +21,13 @@ class ExpensesService implements CRUDService<Expense> {
   }
 
   async getOneById(id: string) {
-    return await ExpensesDao.getExpenseById(id);
+    const expense = await ExpensesDao.getExpenseById(id);
+
+    if (!expense) {
+      throw new NotFoundException("Expenses not found!");
+    }
+
+    return expense;
   }
 
   async updateById(id: string, request: UpdateExpenseRequest) {

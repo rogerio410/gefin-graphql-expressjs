@@ -1,4 +1,5 @@
 import { ulid } from "ulidx";
+import { NotFoundException } from "../common/exceptions/NotFoundException";
 import { Expense } from "../domain/expense.entity";
 
 class ExpensesDAO {
@@ -43,7 +44,7 @@ class ExpensesDAO {
   async updateExpenseById(id: string, expenseData: Omit<Expense, "id">) {
     const index = this.getExpenseIndexById(id);
     if (!index) {
-      throw Error("Expense Not Found!");
+      throw new NotFoundException("Expense not found!");
     }
 
     this.expenses[index] = { id, ...expenseData };
@@ -54,7 +55,7 @@ class ExpensesDAO {
   deleteExpenseById(id: string) {
     const index = this.expenses.findIndex((e) => e.id === id);
     if (!index) {
-      throw Error("Expense Not Found!");
+      throw new NotFoundException("Expense not found!");
     }
 
     this.expenses.splice(index, 1);
