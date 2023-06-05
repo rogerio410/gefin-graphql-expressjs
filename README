@@ -2,7 +2,7 @@
 # GEFIN - Gestor Financeiro Pessoal
 - Registro de Gastos Diários
 
-# Ref.: 
+# Base Project Link Ref.:
 https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-1
 https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-2
 https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-3
@@ -12,18 +12,15 @@ yarn init -y
 yarn add express debug winston express-winston cors
 yarn add @types/cors @types/express @types/debug source-map-support tslint typescript -D
 yarn add ts-node-dev -D
+https://github.com/perry-mitchell/ulidx
 
+# Setup GraphQL
 yarn add @apollo/server graphql
 
-- to load .graphql files
 - https://the-guild.dev/graphql/tools/docs/schema-loading
 yarn add @graphql-tools/load-files
 
-https://github.com/perry-mitchell/ulidx
-
 yarn add graphql-parse-resolve-info
 
-
-
-# VS Code
+# VS Code Extension for GraphQL Schema 
 https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql
