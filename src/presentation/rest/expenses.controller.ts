@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 import expenseService from "../../application/expenses.service";
 
 class ExpenseController {
@@ -22,7 +23,7 @@ class ExpenseController {
       category,
     });
 
-    return res.status(201).json(createdExpense);
+    return res.status(StatusCodes.CREATED).json(createdExpense);
   }
 
   async getOne(req: Request, res: Response) {
@@ -37,7 +38,9 @@ class ExpenseController {
     const expense = await expenseService.getOneById(id);
 
     if (!expense) {
-      return res.status(404).json({ error: "Expense Not Found!" });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "Expense Not Found!" });
     }
 
     const { description, amount, category } = req.body;
@@ -47,7 +50,7 @@ class ExpenseController {
       category,
     });
 
-    return res.status(200).json(updatedExpense);
+    return res.json(updatedExpense);
   }
 
   async delete(req: Request, res: Response) {
@@ -60,7 +63,7 @@ class ExpenseController {
 
     await expenseService.deleteById(id);
 
-    return res.status(204).json();
+    return res.status(StatusCodes.NO_CONTENT).json();
   }
 }
 

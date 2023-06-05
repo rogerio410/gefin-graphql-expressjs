@@ -18,6 +18,7 @@
     "express-winston": "^4.2.0",
     "graphql": "^16.6.0",
     "graphql-parse-resolve-info": "^4.13.0",
+    "http-status-codes": "^2.2.0",
     "ulidx": "^1.0.0",
     "winston": "^3.9.0"
   },

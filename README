@@ -14,6 +14,7 @@ yarn add @types/cors @types/express @types/debug source-map-support tslint types
 yarn add ts-node-dev -D
 https://github.com/perry-mitchell/ulidx
 yarn add express-async-errors
+yarn add http-status-codes
 
 # Setup GraphQL
 yarn add @apollo/server graphql
